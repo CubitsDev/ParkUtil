@@ -1,0 +1,8 @@
+name: ParkUtil
+version: ${project.version}
+main: dev.tomr.parkutil.Parkutil
+api-version: 1.13
+prefix: ParkUtil
+authors: [ Tom ]
+description: Util Plugin for loading Park Addons
+website: https://tomr.dev/
