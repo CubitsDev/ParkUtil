@@ -9,10 +9,9 @@ public class MySql implements DataDriver {
     private DatabaseMetaData meta;
 
     public MySql(String host, String user, String pass, String database) {
-        String url = "jdbc:mysql://" + host + "/"
-                + database + "?user=" + user + "&password=" + pass;
+        String url = "jdbc:mysql://" + host + "/" + database;
 
-        try (Connection connection = DriverManager.getConnection(url)) {
+        try (Connection connection = DriverManager.getConnection(url, user, pass)) {
             this.conn = connection;
             if (conn != null) {
                 meta = conn.getMetaData();
@@ -24,41 +23,49 @@ public class MySql implements DataDriver {
     }
 
     @Override
-    public ResultSet customSelectQuery(String query) throws SQLException {
-        Statement statement = conn.createStatement();
-        return statement.executeQuery(query);
+    public ResultSet customSelectQuery(String query, Object[] args) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement(query);
+        for (int i = 0; i < args.length; i++) {
+            statement.setObject(i, args[i]);
+        }
+        return statement.executeQuery();
     }
 
     @Override
     public void createTable(String query) throws SQLException {
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.execute();
         statement.close();
-        conn.commit();
     }
 
     @Override
-    public void customInsertQuery(String query) throws SQLException {
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+    public void customInsertQuery(String query, Object[] args) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement(query);
+        for (int i = 0; i < args.length; i++) {
+            statement.setObject(i, args[i]);
+        }
+        statement.execute();
         statement.close();
-        conn.commit();
     }
 
     @Override
-    public void customUpdateQuery(String query) throws SQLException {
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+    public void customUpdateQuery(String query, Object[] args) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement(query);
+        for (int i = 0; i < args.length; i++) {
+            statement.setObject(i, args[i]);
+        }
+        statement.executeUpdate();
         statement.close();
-        conn.commit();
     }
 
     @Override
-    public void customDeleteQuery(String query) throws SQLException {
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+    public void customDeleteQuery(String query, Object[] args) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement(query);
+        for (int i = 0; i < args.length; i++) {
+            statement.setObject(i, args[i]);
+        }
+        statement.executeUpdate();
         statement.close();
-        conn.commit();
     }
 
     @Override

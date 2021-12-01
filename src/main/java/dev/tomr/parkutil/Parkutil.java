@@ -3,6 +3,7 @@ package dev.tomr.parkutil;
 import dev.tomr.parkutil.data.DataDriver;
 import dev.tomr.parkutil.data.MySql;
 import dev.tomr.parkutil.data.Sqlite;
+import dev.tomr.parkutil.player.PlayerManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,6 +25,8 @@ public final class Parkutil extends JavaPlugin {
     private static Parkutil parkutil;
     @Getter
     private DataDriver dataDriver;
+    @Getter
+    private PlayerManager playerManager;
 
     @Override
     public void onEnable() {
@@ -56,6 +59,7 @@ public final class Parkutil extends JavaPlugin {
                 disablePlugin();
                 break;
         }
+        playerManager = new PlayerManager();
     }
 
     @Override
