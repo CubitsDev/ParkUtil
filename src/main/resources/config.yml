@@ -1,0 +1,9 @@
+store:
+  type: sqlite
+sqlite:
+  filename: database
+mysql:
+  host:
+  user:
+  pass:
+  database:
